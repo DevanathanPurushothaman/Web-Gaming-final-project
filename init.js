@@ -146,17 +146,17 @@ function createEnemy(){
     animation.x = enemyXPos;
     animation.y = enemyYPos;
     animation.gotoAndPlay("flap");
-    //second enemy
-    //animation1 = new createjs.Sprite(spriteSheet2, "flap");
-   // animation1.regX = 99;
-   // animation1.regY = 58;
-   // animation1.x = enemyXPos;
-    //animation1.y = enemyYPos;
-   // animation1.gotoAndPlay("flap");
+   // second enemy
+   /* animation1 = new createjs.Sprite(spriteSheet2, "flap");
+    animation1.regX = 99;
+    animation1.regY = 58;
+    animation1.x = enemyXPos;
+    animation1.y = enemyYPos;
+    animation1.gotoAndPlay("flap");*/
     
     stage.addChildAt(animation,1);
 
-    //stage.addChildAt(animation1,1);
+   // stage.addChildAt(animation1,1);
 }
 
 function batDeath(){
@@ -174,14 +174,14 @@ function batDeath(){
 function tickEvent(){
 	
 	//Make sure enemy bat is within game boundaries
-	if(enemyXPos < WIDTH-10 && enemyXPos > 10)
+	if(enemyXPos+enemyXSpeed < WIDTH-10 && enemyXPos+enemyXSpeed > 10)
 	{
 		enemyXPos += enemyXSpeed;
 	} else {
 		enemyXSpeed = enemyXSpeed * (-1);
 		enemyXPos += enemyXSpeed;
 	}
-	if(enemyYPos < HEIGHT-10 && enemyYPos > 10)
+	if(enemyYPos+enemyYSpeed < HEIGHT-10 && enemyYPos+enemyYSpeed > 10)
 	{
 		enemyYPos += enemyYSpeed;
 	} else {
@@ -249,7 +249,7 @@ function handleMouseDown(event){
 		enemyXSpeed = enemyXSpeed * (-1);
 		enemyYSpeed = enemyYSpeed * (-1);
 	    setTimeout(createEnemy,timeToCreate);
-
+        
     } else {
 		
     	//Miss
