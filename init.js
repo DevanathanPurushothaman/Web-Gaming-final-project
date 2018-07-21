@@ -77,6 +77,10 @@ function queueLoaded(event){
     scoreText.x = 10;
     scoreText.y = 10;
     stage.addChild(scoreText);
+    LevelText = new createjs.Text("Level: 1 " , "36px Arial", "#FFF");
+    LevelText.x = 550;
+    LevelText.y = 10;
+    stage.addChild(LevelText);
 
     //Add Timer
     /*timerText = new createjs.Text("Time Left: " + gameTime.toString(), "36px Arial", "#FFF");
@@ -134,13 +138,22 @@ function queueLoaded(event){
 
 function createEnemy(){
 	
-    //Creates our Enemy
+    //Creates our Enemy based on the levels and changing the scores 
     if (score<=500)
+    {
     animation = new createjs.Sprite(spriteSheet, "flap");
+    LevelText.text = "Level: 1";
+    }
     else if((score>500)&&(score<=1000))
+    {
     animation = new createjs.Sprite(spriteSheet1, "flap");
+    LevelText.text = "Level: 2";
+    }
     else
+    {
     animation = new createjs.Sprite(spriteSheet2, "flap");
+    LevelText.text = "Level: 3";
+    }
     animation.regX = 99;
     animation.regY = 58;
     animation.x = enemyXPos;
@@ -256,8 +269,8 @@ function handleMouseDown(event){
 
     	//Create new enemy
     	var timeToCreate = Math.floor((Math.random()*500));
-		enemyXPos = Math.floor((Math.random()*745)+1);
-		enemyYPos = Math.floor((Math.random()*545)+1);
+		enemyXPos = Math.floor((Math.random()*700)+50);
+		enemyYPos = Math.floor((Math.random()*500)+50);
 		enemyXSpeed = enemyXSpeed * (-1);
 		enemyYSpeed = enemyYSpeed * (-1);
 	    setTimeout(createEnemy,timeToCreate);
