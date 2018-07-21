@@ -100,7 +100,7 @@ function queueLoaded(event){
     //Create Enemy Sprite
     spriteSheet = new createjs.SpriteSheet({
         "images": [queue.getResult('batSpritesheet')],
-        "frames": {"width": 95, "height": 55},
+        "frames": {"width": 95, "height": 95},
         "animations": { "flap": [0,1] }
     });
 
