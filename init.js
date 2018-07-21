@@ -132,7 +132,7 @@ function queueLoaded(event){
 function createEnemy(){
 	
     //Creates our Enemy based on the levels and changing the scores 
-    if (score<=300)
+    if (score<=1000)
     { 
         if(level1ComponentFlag==0)
         {
@@ -173,7 +173,8 @@ function createEnemy(){
     //LevelText.text = "Level: 1";
 
    // CreateStageElement();
-    }else if ((score = 400)&&(Boss1Flag==0))//adding boss level1
+    }
+  /*  else if ((score = 400)&&(Boss1Flag==0))//adding boss level1
     {
         animation = new createjs.Sprite(Boss1spriteSheetob, "flap");
         animation.regX = 99;
@@ -184,24 +185,24 @@ function createEnemy(){
         stage.addChildAt(animation,1);
         Boss1Flag=1;
 
-    }
-    else if((score>400)&&(score<=600))
+    }*/
+    else if((score > 1000)&&(score <= 2000))  
     {
         if (level2ComponentFlag==0) 
         {  stage.removeAllChildren();
             var backgroundImage = new createjs.Bitmap(queue.getResult("backgroundImageL2"))
             stage.addChild(backgroundImage);
-
-            scoreText = new createjs.Text("SCORE: " + score.toString(), "36px Arial", "#FFF");
+            scoreText = new createjs.Text("SCORE: ", "36px Arial", "#FFF");
             scoreText.x = 10;
             scoreText.y = 10;
-           // scoreText.text = "SCORE: " + score.toString();
+            scoreText.text = "SCORE: " + score.toString();
             stage.addChild(scoreText);
     
             LevelText = new createjs.Text("Level: 2" , "36px Arial", "#FFF");
             LevelText.x = 550;
             LevelText.y = 10;
             stage.addChild(LevelText);
+            level2ComponentFlag=1;
         }
         
     animation = new createjs.Sprite(spriteSheet1, "flap");
@@ -218,17 +219,18 @@ function createEnemy(){
         {  stage.removeAllChildren();
             var backgroundImage = new createjs.Bitmap(queue.getResult("backgroundImageL3"))
             stage.addChild(backgroundImage);
-
+            
             scoreText = new createjs.Text("SCORE: " + score.toString(), "36px Arial", "#FFF");
             scoreText.x = 10;
             scoreText.y = 10;
-           // scoreText.text = "SCORE: " + score.toString();
+            scoreText.text = "SCORE: " + score.toString();
             stage.addChild(scoreText);
     
             LevelText = new createjs.Text("Level: 3" , "36px Arial", "#FFF");
             LevelText.x = 550;
             LevelText.y = 10;
             stage.addChild(LevelText);
+            level3ComponentFlag=1;
         }
     animation = new createjs.Sprite(spriteSheet2, "flap");
     
@@ -242,17 +244,7 @@ function createEnemy(){
     stage.addChildAt(animation,1);
     }
    
-   // second enemy
-  /*  animation1 = new createjs.Sprite(spriteSheet2, "flap");
-    animation1.regX = 99;
-    animation1.regY = 58;
-    animation1.x = enemyXPos;
-    animation1.y = enemyYPos;
-    animation1.gotoAndPlay("flap");*/
-    
-   
 
-   // stage.addChildAt(animation1,1);
 }
 
 function batDeath(){
@@ -325,24 +317,27 @@ function handleMouseDown(event){
     var distY = Math.abs(shotY - spriteY);
 
     //Anywhere in the body or head is a hit - but not the wings
-   if((Boss1Flag==1) && (Boss1DeathFlag==0) && (distX < 60 && distY < 59 ))
-   {        
-       if(Boss1ShotCount<5)
-       {
-       Boss1ShotCount++;
-       createjs.Sound.play("BossPain");
-       }
-      else {
-                Boss1DeathFlag=1;
-            }
-           
-   }
-else if(distX < 60 && distY < 59 )
+    if((Boss1Flag==1) && (Boss1DeathFlag==0)&& (distX < 60 && distY < 59 ))
+    {        
+        if(Boss1ShotCount<5)
+        {
+        Boss1ShotCount++;
+        createjs.Sound.play("BossPain");
+        }
+       else {
+                 Boss1DeathFlag=1;
+                // score += killPoints;
+             }
+            
+    }
+    else if(distX < 60 && distY < 59 )
     {     
     	//Hit
     	stage.removeChild(animation);
-    	batDeath();
-    	score += killPoints;
+        batDeath();
+       
+        score += killPoints;
+      //  confirm(score);
     	scoreText.text = "SCORE: " + score.toString();
     	createjs.Sound.play("deathSound");
     	
@@ -374,7 +369,7 @@ else if(distX < 60 && distY < 59 )
 		
     	//Miss
     //	score -= missPoints;
-    	scoreText.text = "SCORE: " + score.toString();
+    //	scoreText.text = "SCORE: " + score.toString();
     }
 }
 
