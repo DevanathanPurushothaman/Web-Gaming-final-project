@@ -21,7 +21,7 @@ var spriteSheet2;
 var level1ComponentFlag=0;
 var level2ComponentFlag=0;
 var level3ComponentFlag=0;
-
+var Boss1Flag=0;
 var enemyXPos=100;
 var enemyYPos=100;
 var enemyXSpeed = 2;
@@ -66,6 +66,8 @@ window.onload = function(){
         {id: 'batDeath', src: 'assets/batDeath.png'},
         {id: 'batSpritesheet1', src: 'assets/dragon1.png'},
         {id: 'batSpritesheet2', src: 'assets/dragon2.png'},
+        {id: 'Boss1Spritesheet', src: 'assets/Boss1.png'},
+
     ]);
     queue.load();
 
@@ -96,6 +98,11 @@ function queueLoaded(event){
         "frames": {"width": 95, "height": 55},
         "animations": { "flap": [0,1] }
     });
+    Boss1spriteSheetob = new createjs.SpriteSheet({
+        "images": [queue.getResult('Boss1Spritesheet')],
+        "frames": {"width": 120, "height": 120},
+        "animations": { "flap": [0,1] }
+    });
 
 
     //Create Death Enemy Sprite
@@ -105,7 +112,7 @@ function queueLoaded(event){
         "animations": {"die": [2,7, false,1 ] }
     });
 
-    CreateStageElement();
+    //CreateStageElement();
    //Spawn an Enemy
    createEnemy();
 
@@ -123,7 +130,7 @@ function CreateStageElement(){
      //Add background image
      if (score<=300)
      {  
-    }
+     }
      else if((score>300)&&(score<=600))
      {/* stage.removeChild (backgroundImage) ;
        stage.removeChild (scoreText);
@@ -213,7 +220,22 @@ function createEnemy(){
     }
     else
     {
-       
+        if (level3ComponentFlag==0) 
+        {  stage.removeAllChildren();
+            var backgroundImage = new createjs.Bitmap(queue.getResult("backgroundImageL3"))
+            stage.addChild(backgroundImage);
+
+            scoreText = new createjs.Text("SCORE: " + score.toString(), "36px Arial", "#FFF");
+            scoreText.x = 10;
+            scoreText.y = 10;
+           // scoreText.text = "SCORE: " + score.toString();
+            stage.addChild(scoreText);
+    
+            LevelText = new createjs.Text("Level: 3" , "36px Arial", "#FFF");
+            LevelText.x = 550;
+            LevelText.y = 10;
+            stage.addChild(LevelText);
+        }
     animation = new createjs.Sprite(spriteSheet2, "flap");
     
   //  CreateStageElement();
