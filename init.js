@@ -22,6 +22,9 @@ var level1ComponentFlag=0;
 var level2ComponentFlag=0;
 var level3ComponentFlag=0;
 var Boss1Flag=0;
+var Boss1SpeedFlag=0;
+var Boss1DeathFlag=0;
+var Boss1ShotCount=0;
 var enemyXPos=100;
 var enemyYPos=100;
 var enemyXSpeed = 2;
@@ -60,6 +63,7 @@ window.onload = function(){
         {id: 'shot', src: 'assets/ExplosionBomb.mp3'},
         {id: 'background', src: 'assets/ambient.wav'},
         {id: 'gameOverSound', src: 'assets/gameOver.mp3'},
+        {id: 'BossPain', src: 'assets/BossPain.mp3'},
         {id: 'tick', src: 'assets/tick.mp3'},
         {id: 'deathSound', src: 'assets/die.mp3'},
         {id: 'batSpritesheet', src: 'assets/dragon.png'},
@@ -321,7 +325,19 @@ function handleMouseDown(event){
     var distY = Math.abs(shotY - spriteY);
 
     //Anywhere in the body or head is a hit - but not the wings
-    if(distX < 60 && distY < 59 )
+   if((Boss1Flag==1) && (Boss1DeathFlag==0) && (distX < 60 && distY < 59 ))
+   {        
+       if(Boss1ShotCount<5)
+       {
+       Boss1ShotCount++;
+       createjs.Sound.play("BossPain");
+       }
+      else {
+                Boss1DeathFlag=1;
+            }
+           
+   }
+else if(distX < 60 && distY < 59 )
     {     
     	//Hit
     	stage.removeChild(animation);
