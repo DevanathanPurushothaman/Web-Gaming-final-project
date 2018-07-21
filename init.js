@@ -18,7 +18,9 @@ var deathAnimation;
 var spriteSheet;
 var spriteSheet1;
 var spriteSheet2;
+var level1ComponentFlag=0;
 var level2ComponentFlag=0;
+var level3ComponentFlag=0;
 
 var enemyXPos=100;
 var enemyYPos=100;
@@ -74,7 +76,35 @@ window.onload = function(){
 
 function queueLoaded(event){
 	
-   
+    createjs.Sound.play("background", {loop: -1});
+ 
+    //Create Enemy Sprite
+    spriteSheet = new createjs.SpriteSheet({
+        "images": [queue.getResult('batSpritesheet')],
+        "frames": {"width": 95, "height": 95},
+        "animations": { "flap": [0,1] }
+    });
+
+    spriteSheet1 = new createjs.SpriteSheet({
+        "images": [queue.getResult('batSpritesheet1')],
+        "frames": {"width": 95, "height": 55},
+        "animations": { "flap": [0,1] }
+    });
+
+    spriteSheet2 = new createjs.SpriteSheet({
+        "images": [queue.getResult('batSpritesheet2')],
+        "frames": {"width": 95, "height": 55},
+        "animations": { "flap": [0,1] }
+    });
+
+
+    //Create Death Enemy Sprite
+    batDeathSpriteSheet = new createjs.SpriteSheet({
+        "images": [queue.getResult('batDeath')],
+        "frames": {"width": 198, "height" : 148},
+        "animations": {"die": [2,7, false,1 ] }
+    });
+
     CreateStageElement();
    //Spawn an Enemy
    createEnemy();
@@ -92,62 +122,7 @@ function queueLoaded(event){
 function CreateStageElement(){
      //Add background image
      if (score<=300)
-     {
-        var backgroundImage = new createjs.Bitmap(queue.getResult("backgroundImage"))
-         //Add Score
-         stage.addChild(backgroundImage);
-         scoreText = new createjs.Text("SCORE: " + score.toString(), "36px Arial", "#FFF");
-         scoreText.x = 10;
-         scoreText.y = 10;
-         stage.addChild(scoreText);
-
-         LevelText = new createjs.Text("Level:" , "36px Arial", "#FFF");
-         LevelText.x = 550;
-         LevelText.y = 10;
-         stage.addChild(LevelText);
-     
-         //Add Timer
-         /*timerText = new createjs.Text("Time Left: " + gameTime.toString(), "36px Arial", "#FFF");
-         timerText.x = 550;
-         timerText.y = 10;
-         stage.addChild(timerText);*/
-         
-         //instructions
-         instructions = new createjs.Text("Shoot with your mouse!", "48px Arial", "#FFF");
-         instructions.x = 120;
-         instructions.y = 250;
-         stage.addChild(instructions); 
-            //Background Audio
-     createjs.Sound.play("background", {loop: -1});
- 
-     //Create Enemy Sprite
-     spriteSheet = new createjs.SpriteSheet({
-         "images": [queue.getResult('batSpritesheet')],
-         "frames": {"width": 95, "height": 95},
-         "animations": { "flap": [0,1] }
-     });
- 
-     spriteSheet1 = new createjs.SpriteSheet({
-         "images": [queue.getResult('batSpritesheet1')],
-         "frames": {"width": 95, "height": 55},
-         "animations": { "flap": [0,1] }
-     });
- 
-     spriteSheet2 = new createjs.SpriteSheet({
-         "images": [queue.getResult('batSpritesheet2')],
-         "frames": {"width": 95, "height": 55},
-         "animations": { "flap": [0,1] }
-     });
- 
- 
-     //Create Death Enemy Sprite
-     batDeathSpriteSheet = new createjs.SpriteSheet({
-         "images": [queue.getResult('batDeath')],
-         "frames": {"width": 198, "height" : 148},
-         "animations": {"die": [2,7, false,1 ] }
-     });
- 
-
+     {  
     }
      else if((score>300)&&(score<=600))
      {/* stage.removeChild (backgroundImage) ;
@@ -155,17 +130,6 @@ function CreateStageElement(){
        Stage.removeChild(LevelText);
      stage.removeChild(animation);*/
 
-        var backgroundImage = new createjs.Bitmap(queue.getResult("backgroundImageL2"))
-        stage.addChild(backgroundImage);
-        scoreText = new createjs.Text("SCORE: " + score.toString(), "36px Arial", "#FFF");
-        scoreText.x = 10;
-        scoreText.y = 10;
-        stage.addChild(scoreText);
-
-        LevelText = new createjs.Text("Level:" , "36px Arial", "#FFF");
-        LevelText.x = 550;
-        LevelText.y = 10;
-        stage.addChild(LevelText);
      }
      else
      {
@@ -179,32 +143,89 @@ function createEnemy(){
 	
     //Creates our Enemy based on the levels and changing the scores 
     if (score<=300)
-    {
+    { 
+        if(level1ComponentFlag==0)
+        {
+        var backgroundImage = new createjs.Bitmap(queue.getResult("backgroundImage"))
+         //Add Score
+         stage.addChild(backgroundImage);
+         scoreText = new createjs.Text("SCORE: " + score.toString(), "36px Arial", "#FFF");
+         scoreText.x = 10;
+         scoreText.y = 10;
+         stage.addChild(scoreText);
+
+         LevelText = new createjs.Text("Level: 1" , "36px Arial", "#FFF");
+         LevelText.x = 550;
+         LevelText.y = 10;
+         stage.addChild(LevelText);
+      
+         //Add Timer
+         /*timerText = new createjs.Text("Time Left: " + gameTime.toString(), "36px Arial", "#FFF");
+         timerText.x = 550;
+         timerText.y = 10;
+         stage.addChild(timerText);*/
+         
+         //instructions
+         instructions = new createjs.Text("Shoot with your mouse!", "48px Arial", "#FFF");
+         instructions.x = 120;
+         instructions.y = 250;
+         stage.addChild(instructions); 
+         //Background Audio
+         level1ComponentFlag=1; 
+    }
     animation = new createjs.Sprite(spriteSheet, "flap");
-    LevelText.text = "Level: 1";
-   // CreateStageElement();
-    }
-    else if((score>300)&&(score<=600))
-    {
-if (level2ComponentFlag==0){
-    CreateStageElement();
-    level2ComponentFlag=1;
-}
-    animation = new createjs.Sprite(spriteSheet1, "flap");
-    LevelText.text = "Level: 2";
-    }
-    else
-    {
-    animation = new createjs.Sprite(spriteSheet2, "flap");
-    
-    CreateStageElement();
-    LevelText.text = "Level: 3";
-    }
     animation.regX = 99;
     animation.regY = 58;
     animation.x = enemyXPos;
     animation.y = enemyYPos;
     animation.gotoAndPlay("flap");
+    stage.addChildAt(animation,1);
+    //LevelText.text = "Level: 1";
+
+   // CreateStageElement();
+    }
+    else if((score>300)&&(score<=600))
+    {
+        if (level2ComponentFlag==0) 
+        {  stage.removeAllChildren();
+            var backgroundImage = new createjs.Bitmap(queue.getResult("backgroundImageL2"))
+            stage.addChild(backgroundImage);
+
+            scoreText = new createjs.Text("SCORE: " + score.toString(), "36px Arial", "#FFF");
+            scoreText.x = 10;
+            scoreText.y = 10;
+           // scoreText.text = "SCORE: " + score.toString();
+            stage.addChild(scoreText);
+    
+            LevelText = new createjs.Text("Level: 2" , "36px Arial", "#FFF");
+            LevelText.x = 550;
+            LevelText.y = 10;
+            stage.addChild(LevelText);
+        }
+        
+    animation = new createjs.Sprite(spriteSheet1, "flap");
+    animation.regX = 99;
+    animation.regY = 58;
+    animation.x = enemyXPos;
+    animation.y = enemyYPos;
+    animation.gotoAndPlay("flap");
+    stage.addChildAt(animation,1);
+    }
+    else
+    {
+       
+    animation = new createjs.Sprite(spriteSheet2, "flap");
+    
+  //  CreateStageElement();
+    LevelText.text = "Level: 3";
+    animation.regX = 99;
+    animation.regY = 58;
+    animation.x = enemyXPos;
+    animation.y = enemyYPos;
+    animation.gotoAndPlay("flap");
+    stage.addChildAt(animation,1);
+    }
+   
    // second enemy
   /*  animation1 = new createjs.Sprite(spriteSheet2, "flap");
     animation1.regX = 99;
@@ -213,7 +234,7 @@ if (level2ComponentFlag==0){
     animation1.y = enemyYPos;
     animation1.gotoAndPlay("flap");*/
     
-    stage.addChildAt(animation,1);
+   
 
    // stage.addChildAt(animation1,1);
 }
@@ -289,7 +310,7 @@ function handleMouseDown(event){
 
     //Anywhere in the body or head is a hit - but not the wings
     if(distX < 60 && distY < 59 )
-    {
+    {     
     	//Hit
     	stage.removeChild(animation);
     	batDeath();
@@ -312,7 +333,7 @@ function handleMouseDown(event){
 			enemyYSpeed = 5;
 			enemyXSpeed = 5;
 		}
-
+       
     	//Create new enemy
     	var timeToCreate = Math.floor((Math.random()*500));
 		enemyXPos = Math.floor((Math.random()*700)+50);
