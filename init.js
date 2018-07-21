@@ -125,27 +125,6 @@ function queueLoaded(event){
    window.onmousedown = handleMouseDown;
 }
 
-
-function CreateStageElement(){
-     //Add background image
-     if (score<=300)
-     {  
-     }
-     else if((score>300)&&(score<=600))
-     {/* stage.removeChild (backgroundImage) ;
-       stage.removeChild (scoreText);
-       Stage.removeChild(LevelText);
-     stage.removeChild(animation);*/
-
-     }
-     else
-     {
-        var backgroundImage = new createjs.Bitmap(queue.getResult("backgroundImageL3"))
-     }
-
-     //stage.addChild(backgroundImage);
- 
-}
 function createEnemy(){
 	
     //Creates our Enemy based on the levels and changing the scores 
@@ -190,8 +169,19 @@ function createEnemy(){
     //LevelText.text = "Level: 1";
 
    // CreateStageElement();
+    }else if ((score = 400)&&(Boss1Flag==0))//adding boss level1
+    {
+        animation = new createjs.Sprite(Boss1spriteSheetob, "flap");
+        animation.regX = 99;
+        animation.regY = 58;
+        animation.x = enemyXPos;
+        animation.y = enemyYPos;
+        animation.gotoAndPlay("flap");
+        stage.addChildAt(animation,1);
+        Boss1Flag=1;
+
     }
-    else if((score>300)&&(score<=600))
+    else if((score>400)&&(score<=600))
     {
         if (level2ComponentFlag==0) 
         {  stage.removeAllChildren();
