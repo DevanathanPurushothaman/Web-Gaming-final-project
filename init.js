@@ -147,7 +147,7 @@ function createEnemy(){
     animation.y = enemyYPos;
     animation.gotoAndPlay("flap");
    // second enemy
-   /* animation1 = new createjs.Sprite(spriteSheet2, "flap");
+  /*  animation1 = new createjs.Sprite(spriteSheet2, "flap");
     animation1.regX = 99;
     animation1.regY = 58;
     animation1.x = enemyXPos;
@@ -174,14 +174,14 @@ function batDeath(){
 function tickEvent(){
 	
 	//Make sure enemy bat is within game boundaries
-	if(enemyXPos+enemyXSpeed < WIDTH-10 && enemyXPos+enemyXSpeed > 10)
+	if(enemyXPos < WIDTH-10 && enemyXPos > 70 )
 	{
 		enemyXPos += enemyXSpeed;
 	} else {
 		enemyXSpeed = enemyXSpeed * (-1);
 		enemyXPos += enemyXSpeed;
 	}
-	if(enemyYPos+enemyYSpeed < HEIGHT-10 && enemyYPos+enemyYSpeed > 10)
+	if(enemyYPos < HEIGHT-10 && enemyYPos > 70)
 	{
 		enemyYPos += enemyYSpeed;
 	} else {
@@ -189,6 +189,18 @@ function tickEvent(){
 		enemyYPos += enemyYSpeed;
 	}
 
+
+   /* if (enemyXPos < WIDTH-40 && enemyXPos > 40)
+    {enemyXPos=enemyXPos}
+    else{
+        enemyXPos=enemyXPos+30
+    }
+    if(enemyYPos < HEIGHT-40 && enemyYPos > 40)
+	{
+		enemyYPos = enemyYPos;
+	} else {
+    
+        enemyYPos = enemyYPos + 30}*/
 	animation.x = enemyXPos;
 	animation.y = enemyYPos;
 }
