@@ -18,6 +18,7 @@ var deathAnimation;
 var spriteSheet;
 var spriteSheet1;
 var spriteSheet2;
+var level2ComponentFlag=0;
 
 var enemyXPos=100;
 var enemyYPos=100;
@@ -151,10 +152,20 @@ function CreateStageElement(){
      else if((score>300)&&(score<=600))
      {/* stage.removeChild (backgroundImage) ;
        stage.removeChild (scoreText);
-       Stage.removeChild(LevelText);*/
-    // stage.removeChild(animation);
+       Stage.removeChild(LevelText);
+     stage.removeChild(animation);*/
 
         var backgroundImage = new createjs.Bitmap(queue.getResult("backgroundImageL2"))
+        stage.addChild(backgroundImage);
+        scoreText = new createjs.Text("SCORE: " + score.toString(), "36px Arial", "#FFF");
+        scoreText.x = 10;
+        scoreText.y = 10;
+        stage.addChild(scoreText);
+
+        LevelText = new createjs.Text("Level:" , "36px Arial", "#FFF");
+        LevelText.x = 550;
+        LevelText.y = 10;
+        stage.addChild(LevelText);
      }
      else
      {
@@ -175,9 +186,11 @@ function createEnemy(){
     }
     else if((score>300)&&(score<=600))
     {
-    animation = new createjs.Sprite(spriteSheet1, "flap");
-    
+if (level2ComponentFlag==0){
     CreateStageElement();
+    level2ComponentFlag=1;
+}
+    animation = new createjs.Sprite(spriteSheet1, "flap");
     LevelText.text = "Level: 2";
     }
     else
