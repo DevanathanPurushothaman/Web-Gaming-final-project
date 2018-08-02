@@ -72,6 +72,8 @@ window.onload = function () {
         { id: 'batSpritesheet1', src: 'assets/dragon1.png' },
         { id: 'batSpritesheet2', src: 'assets/dragon2.png' },
         { id: 'Boss1Spritesheet', src: 'assets/Boss1.png' },
+        { id: 'Boss2Spritesheet', src: 'assets/Boss2.png' },
+        { id: 'Boss3Spritesheet', src: 'assets/Boss1.png' },
 
     ]);
     queue.load();
@@ -88,7 +90,7 @@ function queueLoaded(event) {
     //Create Enemy Sprite
     spriteSheet = new createjs.SpriteSheet({
         "images": [queue.getResult('batSpritesheet')],
-        "frames": { "width": 95, "height": 95 },
+         "frames": { "width": 95, "height": 95 },
         "animations": { "flap": [0, 1] }
     });
 
@@ -108,7 +110,11 @@ function queueLoaded(event) {
         "frames": { "width": 120, "height": 120 },
         "animations": { "flap": [0, 1] }
     });
-
+    Boss2spriteSheetob = new createjs.SpriteSheet({
+        "images": [queue.getResult('Boss2Spritesheet')],
+        "frames": { "width": 110, "height": 55 },
+        "animations": { "flap": [0, 1] }
+    });
 
     //Create Death Enemy Sprite
     batDeathSpriteSheet = new createjs.SpriteSheet({
@@ -242,7 +248,7 @@ function createEnemy() {
         }
         else if(enemyCount == 20)
         {
-        animation = new createjs.Sprite(Boss1spriteSheetob, "flap");
+        animation = new createjs.Sprite(Boss2spriteSheetob, "flap");
         animation.regX = 99;
         animation.regY = 58;
         animation.x = enemyXPos;
