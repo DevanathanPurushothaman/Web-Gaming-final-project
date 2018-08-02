@@ -38,6 +38,7 @@ var missPoints = 35;
 // Timer
 var gameTimer;
 var gameTime ;
+var gameTimerIndex= 1;
 var timerText;
 
 window.onload = function () {
@@ -73,9 +74,18 @@ window.onload = function () {
         { id: 'batSpritesheet2', src: 'assets/dragon2.png' },
         { id: 'Boss1Spritesheet', src: 'assets/Boss1.png' },
         { id: 'Boss2Spritesheet', src: 'assets/Boss2.png' },
-        { id: 'Boss3Spritesheet', src: 'assets/Boss1.png' },
+        { id: 'Boss3Spritesheet', src: 'assets/Boss3.png' },
+        { id: 'ExitButton', src: 'assets/ExitButton.png' },
+        { id: 'StartButton', src: 'assets/StartButton.png' },
+        { id: 'InstructionButton', src: 'assets/Instructionbtn.png' },
+        { id: 'RestartButton1', src: 'assets/RestartButton.png' },
+        { id: 'MenuButton', src: 'assets/menu.png' },
+
 
     ]);
+   /* _RestartButton = new objects.Button("RestartButton", 160, 382, false);
+    _RestartButton.on("click", , this);
+    this.addChild(this._RestartButton);*/
     queue.load();
 
     //Create Timer
@@ -90,7 +100,8 @@ function queueLoaded(event) {
     //Create Enemy Sprite
     spriteSheet = new createjs.SpriteSheet({
         "images": [queue.getResult('batSpritesheet')],
-         "frames": { "width": 95, "height": 95 },
+       "frames": { "width": 95, "height": 95 },
+        // "frames": { "width": 177, "height": 170 },
         "animations": { "flap": [0, 1] }
     });
 
@@ -113,6 +124,11 @@ function queueLoaded(event) {
     Boss2spriteSheetob = new createjs.SpriteSheet({
         "images": [queue.getResult('Boss2Spritesheet')],
         "frames": { "width": 110, "height": 55 },
+        "animations": { "flap": [0, 1] }
+    });
+    Boss3spriteSheetob = new createjs.SpriteSheet({
+        "images": [queue.getResult('Boss3Spritesheet')],
+        "frames": { "width": 177, "height": 170 },
         "animations": { "flap": [0, 1] }
     });
 
@@ -141,6 +157,7 @@ function createEnemy() {
     //Creates our Enemy based on the levels and changing the scores 
     if (score < 1000) {
         if (level1ComponentFlag == 0) {
+            stage.removeAllChildren();
             gameTime = 40;
             var backgroundImage = new createjs.Bitmap(queue.getResult("backgroundImage"))
             //Add Score
@@ -158,7 +175,7 @@ function createEnemy() {
 
             //Add Timer
             timerText = new createjs.Text("Time Left: " + gameTime.toString(), "36px Arial", "#FFF");
-            timerText.x = 550;
+            timerText.x = 550;  
             timerText.y = 10;
             stage.addChild(timerText);
 
@@ -298,7 +315,7 @@ function createEnemy() {
         }
         else if(enemyCount == 30)
         {
-        animation = new createjs.Sprite(Boss1spriteSheetob, "flap");
+        animation = new createjs.Sprite(Boss3spriteSheetob, "flap");
         animation.regX = 99;
         animation.regY = 58;
         animation.x = enemyXPos;
@@ -307,11 +324,24 @@ function createEnemy() {
         stage.addChildAt(animation,1);
         Boss1Flag=1;
         }else if(enemyCount==31)
-        {
+        { gameTimerIndex=0;
             LevelCompleteText = new createjs.Text("Won The Game", "80px Arial", "#FFF");
             LevelCompleteText.x = 150;
             LevelCompleteText.y = 250;
             stage.addChild(LevelCompleteText);
+          /*  this._restartButton1 = new objects.Button("RestartButton", config.Screen.HALF_WIDTH, 400, true);
+            stage.addChild(_restartButton1);
+            this._restartButton1.on("click", function () {
+               score=0;
+               Boss1Flag=0;
+               Boss1DeathFlag=0;
+               level3ComponentFlag = 0;
+               level2ComponentFlag = 0;
+               level1ComponentFlag = 0;
+               enemyCount=0;
+               createEnemy();
+            }, this);*/
+              
         }
     }
 
@@ -329,6 +359,14 @@ function batDeath() {
     deathAnimation.gotoAndPlay("die");
     stage.addChild(deathAnimation);
 }
+SlotMachine.prototype._resetButtonClick = function (event) {
+    console.log("Reset game");
+        this._creditsText.text = "1000";
+    this._betText.text = "0";
+    this._resultText.text ="0";
+    this._jackpotText.text ="5000";
+    this._resetAll();
+};
 
 function tickEvent() {
 
@@ -441,8 +479,9 @@ function handleMouseDown(event) {
 }
 
 function updateTime() {
-    gameTime -= 1;
-    if (gameTime < 0) {
+    gameTime = gameTime - gameTimerIndex;
+  if(gameTimerIndex==1) 
+  { if (gameTime < 0) {
         //End Game
         timerText.text = "GAME OVER";
         stage.removeChild(animation);
@@ -450,13 +489,25 @@ function updateTime() {
         createjs.Sound.removeSound("background");
         var si = createjs.Sound.play("gameOverSound");
         clearInterval(gameTimer);
+       /* _restartButton1 = new createjs.Button("RestartButton1", 200, 400);
+        stage.addChild(_restartButton1);
+        this._restartButton1.on("click", function () {
+           score=0;
+           Boss1Flag=0;
+           Boss1DeathFlag=0;
+           level3ComponentFlag = 0;
+           level2ComponentFlag = 0;
+           level1ComponentFlag = 0;
+           enemyCount=0;
+           createEnemy();
+        }, this);*/
     }
     else {
         //Continue Playing
         timerText.text = "Time Left: " + gameTime;
-        createjs.Sound.play("tick");
+      //  createjs.Sound.play("tick");
     }
-
+ }
     //Remove instructions
     if (score < 57) {
         stage.removeChild(instructions);
