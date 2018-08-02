@@ -385,6 +385,7 @@ function RestartGame() {
                level2ComponentFlag = 0;
                level1ComponentFlag = 0;
                enemyCount=0;
+               gameTimerIndex=1;
                createEnemy();
 }
 function Exit() {
@@ -542,7 +543,8 @@ function updateTime() {
         Exitbutton.y = 400;
         Exitbutton.on('click', Exit);
         stage.addChild(Exitbutton);
-        clearInterval(gameTimer);
+
+        //clearInterval(gameTimer);
        /* _restartButton1 = new createjs.Button("RestartButton1", 200, 400);
         stage.addChild(_restartButton1);
         this._restartButton1.on("click", function () {
