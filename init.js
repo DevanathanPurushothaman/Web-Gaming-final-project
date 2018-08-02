@@ -168,6 +168,8 @@ function StartButton()
 function createEnemy() {
 
     //Creates our Enemy based on the levels and changing the scores 
+  //  score=2200;
+   // enemyCount=30;
     if (score < 1000) {
         if (level1ComponentFlag == 0) {
             stage.removeAllChildren();
@@ -338,8 +340,8 @@ function createEnemy() {
         Boss1Flag=1;
         }else if(enemyCount==31)
         { gameTimerIndex=0;
-            LevelCompleteText = new createjs.Text("Won The Game", "80px Arial", "#FFF");
-            LevelCompleteText.x = 150;
+            LevelCompleteText = new createjs.Text("You Won", "80px Arial", "#FFF");
+            LevelCompleteText.x = 250;
             LevelCompleteText.y = 250;
             stage.addChild(LevelCompleteText);
          /* this._restartButton1 = new objects.Button("RestartButton", config.Screen.HALF_WIDTH, 400, true);
@@ -358,10 +360,17 @@ function createEnemy() {
         button.regX = button.width / 2;
         button.regY = button.height / 2;
         button.x = 400;
-        button.y = 300;
+        button.y = 400;
         button.on('click', RestartGame);
         stage.addChild(button);
-              
+         
+        var Exitbutton = new window.ui.SimpleButton('Exit');
+        Exitbutton.regX = button.width / 2;
+        Exitbutton.regY = button.height / 2;
+        Exitbutton.x = 450;
+        Exitbutton.y = 500;
+        Exitbutton.on('click', Exit);
+        stage.addChild(Exitbutton);
         }
     }
 
@@ -377,6 +386,11 @@ function RestartGame() {
                level1ComponentFlag = 0;
                enemyCount=0;
                createEnemy();
+}
+function Exit() {
+    var myWindow = window.open("", "_self");
+    myWindow.document.write("");
+    setTimeout(function () { myWindow.close(); }, 1000);
 }
 
 function batDeath() {
@@ -511,7 +525,8 @@ function updateTime() {
         stage.removeChild(crossHair);
         createjs.Sound.removeSound("background");
         var si = createjs.Sound.play("gameOverSound");
-        clearInterval(gameTimer);
+     //   stage.removeAllChildren();
+
         var button = new window.ui.SimpleButton('Restart Game');
         button.regX = button.width / 2;
         button.regY = button.height / 2;
@@ -520,6 +535,14 @@ function updateTime() {
         button.on('click', RestartGame);
         stage.addChild(button);
 
+        var Exitbutton = new window.ui.SimpleButton('Exit');
+        Exitbutton.regX = button.width / 2;
+        Exitbutton.regY = button.height / 2;
+        Exitbutton.x = 450;
+        Exitbutton.y = 400;
+        Exitbutton.on('click', Exit);
+        stage.addChild(Exitbutton);
+        clearInterval(gameTimer);
        /* _restartButton1 = new createjs.Button("RestartButton1", 200, 400);
         stage.addChild(_restartButton1);
         this._restartButton1.on("click", function () {
