@@ -141,6 +141,15 @@ function queueLoaded(event) {
 
     //CreateStageElement();
     //Spawn an Enemy
+
+  /*  var button1 = new window.ui.SimpleButton('Start');
+    button1.regX = button.width / 2;
+    button1.regY = button.height / 2;
+    button1.x = 400;
+    button1.y = 300;
+    button1.on('click', startGame);
+    stage.addChild(button1); */
+
     createEnemy();
 
     //Add ticker
@@ -152,6 +161,10 @@ function queueLoaded(event) {
     window.onmousedown = handleMouseDown;
 }
 
+function StartButton() 
+{ 
+   
+}
 function createEnemy() {
 
     //Creates our Enemy based on the levels and changing the scores 
@@ -329,7 +342,7 @@ function createEnemy() {
             LevelCompleteText.x = 150;
             LevelCompleteText.y = 250;
             stage.addChild(LevelCompleteText);
-          /*  this._restartButton1 = new objects.Button("RestartButton", config.Screen.HALF_WIDTH, 400, true);
+         /* this._restartButton1 = new objects.Button("RestartButton", config.Screen.HALF_WIDTH, 400, true);
             stage.addChild(_restartButton1);
             this._restartButton1.on("click", function () {
                score=0;
@@ -341,11 +354,29 @@ function createEnemy() {
                enemyCount=0;
                createEnemy();
             }, this);*/
+        var button = new window.ui.SimpleButton('Restart Game');
+        button.regX = button.width / 2;
+        button.regY = button.height / 2;
+        button.x = 400;
+        button.y = 300;
+        button.on('click', RestartGame);
+        stage.addChild(button);
               
         }
     }
 
 
+}
+
+function RestartGame() {
+    score=0;
+               Boss1Flag=0;
+               Boss1DeathFlag=0;
+               level3ComponentFlag = 0;
+               level2ComponentFlag = 0;
+               level1ComponentFlag = 0;
+               enemyCount=0;
+               createEnemy();
 }
 
 function batDeath() {
@@ -359,14 +390,6 @@ function batDeath() {
     deathAnimation.gotoAndPlay("die");
     stage.addChild(deathAnimation);
 }
-SlotMachine.prototype._resetButtonClick = function (event) {
-    console.log("Reset game");
-        this._creditsText.text = "1000";
-    this._betText.text = "0";
-    this._resultText.text ="0";
-    this._jackpotText.text ="5000";
-    this._resetAll();
-};
 
 function tickEvent() {
 
@@ -489,6 +512,14 @@ function updateTime() {
         createjs.Sound.removeSound("background");
         var si = createjs.Sound.play("gameOverSound");
         clearInterval(gameTimer);
+        var button = new window.ui.SimpleButton('Restart Game');
+        button.regX = button.width / 2;
+        button.regY = button.height / 2;
+        button.x = 400;
+        button.y = 300;
+        button.on('click', RestartGame);
+        stage.addChild(button);
+
        /* _restartButton1 = new createjs.Button("RestartButton1", 200, 400);
         stage.addChild(_restartButton1);
         this._restartButton1.on("click", function () {
