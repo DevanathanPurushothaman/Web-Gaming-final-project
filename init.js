@@ -58,6 +58,7 @@ window.onload = function () {
 
     //Create Load Manifest
     queue.loadManifest([
+        { id: 'initBackground', src: 'assets/initBackground.png' },
         { id: 'backgroundImage', src: 'assets/background.png' },
         { id: 'backgroundImageL2', src: 'assets/backbgroungl2.png' },
         { id: 'backgroundImageL3', src: 'assets/backbgroungl3.png' },
@@ -150,7 +151,7 @@ function queueLoaded(event) {
     button1.on('click', startGame);
     stage.addChild(button1); */
 
-    createEnemy();
+    StartGame();
 
     //Add ticker
     createjs.Ticker.setFPS(15);
@@ -161,9 +162,22 @@ function queueLoaded(event) {
     window.onmousedown = handleMouseDown;
 }
 
-function StartButton() 
+function StartGame() 
 { 
-   
+    welcome = new createjs.Text("Welcome to Shoot The Beast Game!", "36px Arial", "#FFF");
+            welcome.x = 120;
+            welcome.y = 250;
+            
+    var backgroundImage = new createjs.Bitmap(queue.getResult("initBackground"))
+    stage.addChild(backgroundImage);
+    var button = new window.ui.SimpleButton('Start Game');
+    button.regX = button.width / 2;
+    button.regY = button.height / 2;
+    button.x = 400;
+    button.y = 400;
+    button.on('click', createEnemy);
+    stage.addChild(welcome);
+    stage.addChild(button);
 }
 function createEnemy() {
 
