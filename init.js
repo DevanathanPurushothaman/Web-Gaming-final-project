@@ -35,6 +35,9 @@ var score = 0;
 var scoreText;
 var killPoints = 100;
 var missPoints = 35;
+
+var bossKill = 0;
+var bossText;
 // Timer
 var gameTimer;
 var gameTime ;
@@ -119,7 +122,7 @@ function queueLoaded(event) {
     Boss1spriteSheetob = new createjs.SpriteSheet({
         "images": [queue.getResult('Boss1Spritesheet')],
         "frames": { "width": 120, "height": 120 },
-        "animations": { "flap": [0, 1] }
+        "animations": { "flap": [0, 1] },
     });
     Boss2spriteSheetob = new createjs.SpriteSheet({
         "images": [queue.getResult('Boss2Spritesheet')],
@@ -220,6 +223,7 @@ function createEnemy() {
         }
         else if(enemyCount == 10)
         {
+        
         animation = new createjs.Sprite(Boss1spriteSheetob, "flap");
         animation.regX = 99;
         animation.regY = 58;
@@ -228,6 +232,14 @@ function createEnemy() {
         animation.gotoAndPlay("flap");
         stage.addChildAt(animation,1);
         Boss1Flag=1;
+        //adding the Boss Killing score to the screen
+        bossText = new createjs.Text("BOSS KILLS: " + bossKill.toString(), "36px Arial", "#FFF");
+            bossText.x = 10;
+            bossText.y = 50;
+            bossText.text = "BOSS KILLS: " + bossKill.toString();
+            stage.addChild(bossText);
+            
+        
         }
         //LevelText.text = "Level: 1";
 
@@ -269,6 +281,7 @@ function createEnemy() {
         animation.x = enemyXPos;
         animation.y = enemyYPos;
         animation.gotoAndPlay("flap");
+
         stage.addChildAt(animation,1);
         }
         else if(enemyCount == 20)
@@ -281,6 +294,13 @@ function createEnemy() {
         animation.gotoAndPlay("flap");
         stage.addChildAt(animation,1);
         Boss1Flag=1;
+
+        //adding the Boss killing score to the screen
+        bossText = new createjs.Text("BOSS KILLS: " + bossKill.toString(), "36px Arial", "#FFF");
+            bossText.x = 10;
+            bossText.y = 50;
+            bossText.text = "BOSS KILLS: " + bossKill.toString();
+            stage.addChild(bossText);
         }
     }
     else {
@@ -331,6 +351,14 @@ function createEnemy() {
         animation.gotoAndPlay("flap");
         stage.addChildAt(animation,1);
         Boss1Flag=1;
+
+        //adding the Boss kiling score to the screen
+        bossText = new createjs.Text("BOSS KILLS: " + bossKill.toString(), "36px Arial", "#FFF");
+            bossText.x = 10;
+            bossText.y = 50;
+            bossText.text = "BOSS KILLS: " + bossKill.toString();
+            stage.addChild(bossText);
+            
         }else if(enemyCount==31)
         { gameTimerIndex=0;
             LevelCompleteText = new createjs.Text("You Won", "80px Arial", "#FFF");
@@ -448,11 +476,13 @@ function handleMouseDown(event) {
         if (Boss1ShotCount < 5) {
             Boss1ShotCount++;
             createjs.Sound.play("BossPain");
+            bossText.text = "BOSS KILL: " + Boss1ShotCount.toString();
         }
         else {
             Boss1ShotCount=0;
             Boss1DeathFlag = 1;
             // score += killPoints;
+            
         }
 
     }
