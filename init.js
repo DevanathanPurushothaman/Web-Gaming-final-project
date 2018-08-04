@@ -59,6 +59,7 @@ window.onload = function () {
     //Create Load Manifest
     queue.loadManifest([
         { id: 'initBackground', src: 'assets/initBackground.png' },
+        { id: 'ghost', src: 'assets/ghost.mp3' },
         { id: 'backgroundImage', src: 'assets/background.png' },
         { id: 'backgroundImageL2', src: 'assets/backbgroungl2.png' },
         { id: 'backgroundImageL3', src: 'assets/backbgroungl3.png' },
@@ -84,9 +85,7 @@ window.onload = function () {
 
 
     ]);
-   /* _RestartButton = new objects.Button("RestartButton", 160, 382, false);
-    _RestartButton.on("click", , this);
-    this.addChild(this._RestartButton);*/
+
     queue.load();
 
     //Create Timer
@@ -96,7 +95,7 @@ window.onload = function () {
 
 function queueLoaded(event) {
 
-    createjs.Sound.play("background", { loop: -1 });
+   createjs.Sound.play("background", { loop: -1 });
 
     //Create Enemy Sprite
     spriteSheet = new createjs.SpriteSheet({
@@ -140,16 +139,6 @@ function queueLoaded(event) {
         "animations": { "die": [2, 7, false, 1] }
     });
 
-    //CreateStageElement();
-    //Spawn an Enemy
-
-  /*  var button1 = new window.ui.SimpleButton('Start');
-    button1.regX = button.width / 2;
-    button1.regY = button.height / 2;
-    button1.x = 400;
-    button1.y = 300;
-    button1.on('click', startGame);
-    stage.addChild(button1); */
 
     StartGame();
 
@@ -164,8 +153,9 @@ function queueLoaded(event) {
 
 function StartGame() 
 { 
+    createjs.Sound.play("ghost", { loop: -1 });
     welcome = new createjs.Text("Welcome to Shoot The Beast Game!", "36px Arial", "#FFF");
-            welcome.x = 120;
+            welcome.x = 100;
             welcome.y = 250;
             
     var backgroundImage = new createjs.Bitmap(queue.getResult("initBackground"))
@@ -176,14 +166,14 @@ function StartGame()
     button.x = 400;
     button.y = 400;
     button.on('click', createEnemy);
+
     stage.addChild(welcome);
     stage.addChild(button);
 }
 function createEnemy() {
 
+    createjs.Sound.removeSound("ghost");
     //Creates our Enemy based on the levels and changing the scores 
-  //  score=2200;
-   // enemyCount=30;
     if (score < 1000) {
         if (level1ComponentFlag == 0) {
             stage.removeAllChildren();
@@ -243,18 +233,7 @@ function createEnemy() {
 
         // CreateStageElement();
     }
-    /*  else if ((score = 400)&&(Boss1Flag==0))//adding boss level1
-      {
-          animation = new createjs.Sprite(Boss1spriteSheetob, "flap");
-          animation.regX = 99;
-          animation.regY = 58;
-          animation.x = enemyXPos;
-          animation.y = enemyYPos;
-          animation.gotoAndPlay("flap");
-          stage.addChildAt(animation,1);
-          Boss1Flag=1;
-  
-      }*/
+
     else if ((score >= 1000) && (score < 2000)) {
         if (level2ComponentFlag == 0) {
             stage.removeAllChildren();
@@ -358,18 +337,7 @@ function createEnemy() {
             LevelCompleteText.x = 250;
             LevelCompleteText.y = 250;
             stage.addChild(LevelCompleteText);
-         /* this._restartButton1 = new objects.Button("RestartButton", config.Screen.HALF_WIDTH, 400, true);
-            stage.addChild(_restartButton1);
-            this._restartButton1.on("click", function () {
-               score=0;
-               Boss1Flag=0;
-               Boss1DeathFlag=0;
-               level3ComponentFlag = 0;
-               level2ComponentFlag = 0;
-               level1ComponentFlag = 0;
-               enemyCount=0;
-               createEnemy();
-            }, this);*/
+
         var button = new window.ui.SimpleButton('Restart Game');
         button.regX = button.width / 2;
         button.regY = button.height / 2;
