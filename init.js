@@ -508,6 +508,7 @@ function updateTime() {
         stage.removeChild(crossHair);
         createjs.Sound.removeSound("background");
         var si = createjs.Sound.play("gameOverSound");
+        
      //   stage.removeAllChildren();
 
         var button = new window.ui.SimpleButton('Restart Game');
