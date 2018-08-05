@@ -30,13 +30,14 @@ var enemyYPos = 100;
 var enemyXSpeed = 2;
 var enemyYSpeed = 2;
 var enemyCount=0;
+var gameoverSounfFlag=0;
 //Scoring Variables
 var score = 0;
 var scoreText;
 var killPoints = 100;
 var missPoints = 35;
 
-var bossKill = 0;
+var bossKill = 5;
 var bossText;
 // Timer
 var gameTimer;
@@ -61,7 +62,7 @@ window.onload = function () {
 
     //Create Load Manifest
     queue.loadManifest([
-        { id: 'initBackground', src: 'assets/initBackground.png' },
+        { id: 'initBackground', src: 'assets/initBackground.jpg' },
         { id: 'ghost', src: 'assets/ghost.mp3' },
         { id: 'backgroundImage', src: 'assets/background.png' },
         { id: 'backgroundImageL2', src: 'assets/backbgroungl2.png' },
@@ -85,6 +86,7 @@ window.onload = function () {
         { id: 'InstructionButton', src: 'assets/Instructionbtn.png' },
         { id: 'RestartButton1', src: 'assets/RestartButton.png' },
         { id: 'MenuButton', src: 'assets/menu.png' },
+        { id: 'WinSound', src: 'assets/youWin.mp3' },
 
 
     ]);
@@ -157,7 +159,7 @@ function queueLoaded(event) {
 function StartGame() 
 { 
     createjs.Sound.play("ghost", { loop: -1 });
-    welcome = new createjs.Text("Welcome to Shoot The Beast Game!", "36px Arial", "#FFF");
+    welcome = new createjs.Text("Welcome to Shoot The Beast Game!", "36px Algerian", "#FFF");
             welcome.x = 100;
             welcome.y = 250;
             
@@ -184,25 +186,25 @@ function createEnemy() {
             var backgroundImage = new createjs.Bitmap(queue.getResult("backgroundImage"))
             //Add Score
             stage.addChild(backgroundImage);
-            scoreText = new createjs.Text("SCORE: " + score.toString(), "36px Arial", "#FFF");
+            scoreText = new createjs.Text("SCORE: " + score.toString(), "36px Algerian", "#FFF");
             scoreText.x = 10;
             scoreText.y = 10;
             stage.addChild(scoreText);
 
             //Add level
-            LevelText = new createjs.Text("Level: 1", "36px Arial", "#FFF");
+            LevelText = new createjs.Text("Level: 1", "36px Algerian", "#FFF");
             LevelText.x = 300;
             LevelText.y = 10;
             stage.addChild(LevelText);
 
             //Add Timer
-            timerText = new createjs.Text("Time Left: " + gameTime.toString(), "36px Arial", "#FFF");
+            timerText = new createjs.Text("Time Left: " + gameTime.toString(), "36px Algerian", "#FFF");
             timerText.x = 550;  
             timerText.y = 10;
             stage.addChild(timerText);
 
             //instructions
-            instructions = new createjs.Text("Shoot with your mouse!", "48px Arial", "#FFF");
+            instructions = new createjs.Text("Shoot with your mouse!", "48px Algerian", "#FFF");
             instructions.x = 120;
             instructions.y = 250;
             stage.addChild(instructions);
@@ -233,10 +235,10 @@ function createEnemy() {
         stage.addChildAt(animation,1);
         Boss1Flag=1;
         //adding the Boss Killing score to the screen
-        bossText = new createjs.Text("BOSS KILLS: " + bossKill.toString(), "36px Arial", "#FFF");
-            bossText.x = 10;
+        bossText = new createjs.Text("Boss Life: " + bossKill.toString(), "36px Algerian", "#FFF");
+            bossText.x = 300;
             bossText.y = 50;
-            bossText.text = "BOSS KILLS: " + bossKill.toString();
+            bossText.text = "Boss Life: " + bossKill.toString();
             stage.addChild(bossText);
             
         
@@ -252,18 +254,18 @@ function createEnemy() {
             gameTime = 40;
             var backgroundImage = new createjs.Bitmap(queue.getResult("backgroundImageL2"))
             stage.addChild(backgroundImage);
-            scoreText = new createjs.Text("SCORE: ", "36px Arial", "#FFF");
+            scoreText = new createjs.Text("SCORE: ", "36px Algerian", "#FFF");
             scoreText.x = 10;
             scoreText.y = 10;
             scoreText.text = "SCORE: " + score.toString();
             stage.addChild(scoreText);
 
-            LevelText = new createjs.Text("Level: 2", "36px Arial", "#FFF");
+            LevelText = new createjs.Text("Level: 2", "36px Algerian", "#FFF");
             LevelText.x = 300;
             LevelText.y = 10;
             stage.addChild(LevelText);
 
-            timerText = new createjs.Text("Time Left: " + gameTime.toString(), "36px Arial", "#FFF");
+            timerText = new createjs.Text("Time Left: " + gameTime.toString(), "36px Algerian", "#FFF");
             timerText.x = 550;
             timerText.y = 10;
             stage.addChild(timerText);
@@ -296,10 +298,10 @@ function createEnemy() {
         Boss1Flag=1;
 
         //adding the Boss killing score to the screen
-        bossText = new createjs.Text("BOSS KILLS: " + bossKill.toString(), "36px Arial", "#FFF");
-            bossText.x = 10;
+        bossText = new createjs.Text("Boss Life: " + bossKill.toString(), "36px Algerian", "#FFF");
+            bossText.x = 300;
             bossText.y = 50;
-            bossText.text = "BOSS KILLS: " + bossKill.toString();
+            bossText.text = "Boss Life: " + bossKill.toString();
             stage.addChild(bossText);
         }
     }
@@ -310,18 +312,18 @@ function createEnemy() {
             var backgroundImage = new createjs.Bitmap(queue.getResult("backgroundImageL3"))
             stage.addChild(backgroundImage);
 
-            scoreText = new createjs.Text("SCORE: " + score.toString(), "36px Arial", "#FFF");
+            scoreText = new createjs.Text("SCORE: " + score.toString(), "36px Algerian", "#FFF");
             scoreText.x = 10;
             scoreText.y = 10;
             scoreText.text = "SCORE: " + score.toString();
             stage.addChild(scoreText);
 
-            LevelText = new createjs.Text("Level: 3", "36px Arial", "#FFF");
+            LevelText = new createjs.Text("Level: 3", "36px Algerian", "#FFF");
             LevelText.x = 300;
             LevelText.y = 10;
             stage.addChild(LevelText);
 
-            timerText = new createjs.Text("Time Left: " + gameTime.toString(), "36px Arial", "#FFF");
+            timerText = new createjs.Text("Time Left: " + gameTime.toString(), "36px Algerian", "#FFF");
             timerText.x = 550;
             timerText.y = 10;
             stage.addChild(timerText);
@@ -353,19 +355,21 @@ function createEnemy() {
         Boss1Flag=1;
 
         //adding the Boss kiling score to the screen
-        bossText = new createjs.Text("BOSS KILLS: " + bossKill.toString(), "36px Arial", "#FFF");
-            bossText.x = 10;
+        bossText = new createjs.Text("Boss Life: " + bossKill.toString(), "36px Algerian", "#FFF");
+            bossText.x = 300;
             bossText.y = 50;
-            bossText.text = "BOSS KILLS: " + bossKill.toString();
+            bossText.text = "Boss Life: " + bossKill.toString();
             stage.addChild(bossText);
             
         }else if(enemyCount==31)
         { gameTimerIndex=0;
-            LevelCompleteText = new createjs.Text("You Won", "80px Arial", "#FFF");
+            LevelCompleteText = new createjs.Text("You Won", "80px Algerian", "#FFF");
             LevelCompleteText.x = 250;
             LevelCompleteText.y = 250;
             stage.addChild(LevelCompleteText);
+            createjs.Sound.play("WinSound");
 
+            
         var button = new window.ui.SimpleButton('Restart Game');
         button.regX = button.width / 2;
         button.regY = button.height / 2;
@@ -394,6 +398,7 @@ function RestartGame() {
                level3ComponentFlag = 0;
                level2ComponentFlag = 0;
                level1ComponentFlag = 0;
+               gameoverSounfFlag = 0;
                enemyCount=0;
                gameTimerIndex=1;
                createEnemy();
@@ -473,10 +478,10 @@ function handleMouseDown(event) {
 
     //Anywhere in the body or head is a hit - but not the wings
     if ((Boss1Flag == 1) && (Boss1DeathFlag == 0) && (distX < 60 && distY < 59)) {
-        if (Boss1ShotCount < 5) {
+        if (Boss1ShotCount < 4) {
             Boss1ShotCount++;
             createjs.Sound.play("BossPain");
-            bossText.text = "BOSS KILL: " + Boss1ShotCount.toString();
+            bossText.text = "BOSS KILL: " + (bossKill-Boss1ShotCount).toString();
         }
         else {
             Boss1ShotCount=0;
@@ -537,8 +542,11 @@ function updateTime() {
         stage.removeChild(animation);
         stage.removeChild(crossHair);
         createjs.Sound.removeSound("background");
-        var si = createjs.Sound.play("gameOverSound");
-        
+       if(gameoverSounfFlag==0)
+       { createjs.Sound.play("gameOverSound");
+       gameoverSounfFlag=1;
+       }
+       // createjs.Sound.play("BossPain");
      //   stage.removeAllChildren();
 
         var button = new window.ui.SimpleButton('Restart Game');
