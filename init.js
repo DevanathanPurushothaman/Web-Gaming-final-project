@@ -160,7 +160,7 @@ function StartGame()
 { 
     createjs.Sound.play("ghost", { loop: -1 });
     welcome = new createjs.Text("Welcome to Shoot The Beast Game!", "36px Algerian", "#FFF");
-            welcome.x = 100;
+            welcome.x = 65;
             welcome.y = 250;
             
     var backgroundImage = new createjs.Bitmap(queue.getResult("initBackground"))
@@ -581,7 +581,7 @@ function updateTime() {
     }
     else {
         //Continue Playing
-        timerText.text = "Time Left: " + gameTime;
+        timerText.text = "Time Left: " + gameTime.toString();
       //  createjs.Sound.play("tick");
     }
  }
